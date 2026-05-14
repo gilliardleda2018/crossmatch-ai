@@ -1,0 +1,58 @@
+MOTOR DE MATCHING - DOAÇÃO CRUZADA INTERVIVOS
+=======================================================
+Total de pares avaliados: 120
+Matches cruzados viáveis: 1485
+Ciclos de 2 pares encontrados: 322
+Ciclos de 3 pares encontrados: 4125
+
+TOP 10 ciclos de 2 pares:
+  par_1   par_2  score_total  score_medio tipo_ciclo
+PAR_075 PAR_117        1.562        0.781    2_pares
+PAR_037 PAR_057        1.557        0.778    2_pares
+PAR_069 PAR_075        1.546        0.773    2_pares
+PAR_003 PAR_012        1.542        0.771    2_pares
+PAR_012 PAR_109        1.537        0.768    2_pares
+PAR_012 PAR_037        1.533        0.766    2_pares
+PAR_012 PAR_075        1.531        0.766    2_pares
+PAR_070 PAR_093        1.520        0.760    2_pares
+PAR_057 PAR_075        1.519        0.760    2_pares
+PAR_055 PAR_075        1.516        0.758    2_pares
+
+TOP 10 ciclos de 3 pares:
+  par_1   par_2   par_3                                 fluxo  score_total  score_medio tipo_ciclo
+PAR_012 PAR_075 PAR_117 PAR_012 → PAR_075 → PAR_117 → PAR_012        2.359        0.786    3_pares
+PAR_003 PAR_012 PAR_075 PAR_003 → PAR_012 → PAR_075 → PAR_003        2.313        0.771    3_pares
+PAR_003 PAR_012 PAR_094 PAR_003 → PAR_012 → PAR_094 → PAR_003        2.306        0.769    3_pares
+PAR_069 PAR_075 PAR_117 PAR_069 → PAR_075 → PAR_117 → PAR_069        2.300        0.767    3_pares
+PAR_037 PAR_075 PAR_117 PAR_037 → PAR_075 → PAR_117 → PAR_037        2.297        0.766    3_pares
+PAR_003 PAR_075 PAR_055 PAR_003 → PAR_075 → PAR_055 → PAR_003        2.297        0.766    3_pares
+PAR_037 PAR_070 PAR_093 PAR_037 → PAR_070 → PAR_093 → PAR_037        2.293        0.764    3_pares
+PAR_037 PAR_057 PAR_075 PAR_037 → PAR_057 → PAR_075 → PAR_037        2.291        0.764    3_pares
+PAR_055 PAR_069 PAR_075 PAR_055 → PAR_069 → PAR_075 → PAR_055        2.291        0.764    3_pares
+PAR_070 PAR_093 PAR_075 PAR_070 → PAR_093 → PAR_075 → PAR_070        2.291        0.764    3_pares
+
+Melhores ciclos de 2 pares sem sobreposição:
+  par_1   par_2  score_total  score_medio tipo_ciclo
+PAR_075 PAR_117        1.562        0.781    2_pares
+PAR_037 PAR_057        1.557        0.778    2_pares
+PAR_003 PAR_012        1.542        0.771    2_pares
+PAR_070 PAR_093        1.520        0.760    2_pares
+PAR_055 PAR_061        1.511        0.756    2_pares
+PAR_094 PAR_120        1.499        0.750    2_pares
+PAR_069 PAR_090        1.485        0.742    2_pares
+PAR_026 PAR_103        1.464        0.732    2_pares
+PAR_015 PAR_101        1.448        0.724    2_pares
+PAR_005 PAR_021        1.443        0.722    2_pares
+
+Melhores ciclos de 3 pares sem sobreposição:
+  par_1   par_2   par_3                                 fluxo  score_total  score_medio tipo_ciclo
+PAR_012 PAR_075 PAR_117 PAR_012 → PAR_075 → PAR_117 → PAR_012        2.359        0.786    3_pares
+PAR_037 PAR_070 PAR_093 PAR_037 → PAR_070 → PAR_093 → PAR_037        2.293        0.764    3_pares
+PAR_015 PAR_055 PAR_090 PAR_015 → PAR_055 → PAR_090 → PAR_015        2.283        0.761    3_pares
+PAR_003 PAR_092 PAR_028 PAR_003 → PAR_092 → PAR_028 → PAR_003        2.274        0.758    3_pares
+PAR_046 PAR_061 PAR_109 PAR_046 → PAR_061 → PAR_109 → PAR_046        2.237        0.746    3_pares
+PAR_007 PAR_057 PAR_034 PAR_007 → PAR_057 → PAR_034 → PAR_007        2.194        0.731    3_pares
+PAR_014 PAR_094 PAR_099 PAR_014 → PAR_094 → PAR_099 → PAR_014        2.173        0.724    3_pares
+PAR_021 PAR_052 PAR_080 PAR_021 → PAR_052 → PAR_080 → PAR_021        2.146        0.715    3_pares
+PAR_053 PAR_069 PAR_111 PAR_053 → PAR_069 → PAR_111 → PAR_053        2.126        0.709    3_pares
+PAR_026 PAR_101 PAR_027 PAR_026 → PAR_101 → PAR_027 → PAR_026        2.093        0.698    3_pares

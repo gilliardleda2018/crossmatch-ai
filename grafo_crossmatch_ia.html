@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 650px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_014", "label": "PAR_014", "shape": "dot", "size": 10, "title": "Par origem: PAR_014"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_029", "label": "PAR_029", "shape": "dot", "size": 10, "title": "Par destino: PAR_029"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_090", "label": "PAR_090", "shape": "dot", "size": 10, "title": "Par destino: PAR_090"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_012", "label": "PAR_012", "shape": "dot", "size": 10, "title": "Par destino: PAR_012"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_067", "label": "PAR_067", "shape": "dot", "size": 10, "title": "Par origem: PAR_067"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_051", "label": "PAR_051", "shape": "dot", "size": 10, "title": "Par destino: PAR_051"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_027", "label": "PAR_027", "shape": "dot", "size": 10, "title": "Par destino: PAR_027"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_034", "label": "PAR_034", "shape": "dot", "size": 10, "title": "Par destino: PAR_034"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_065", "label": "PAR_065", "shape": "dot", "size": 10, "title": "Par destino: PAR_065"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_117", "label": "PAR_117", "shape": "dot", "size": 10, "title": "Par origem: PAR_117"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_003", "label": "PAR_003", "shape": "dot", "size": 10, "title": "Par destino: PAR_003"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_061", "label": "PAR_061", "shape": "dot", "size": 10, "title": "Par destino: PAR_061"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_069", "label": "PAR_069", "shape": "dot", "size": 10, "title": "Par destino: PAR_069"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_092", "label": "PAR_092", "shape": "dot", "size": 10, "title": "Par destino: PAR_092"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_073", "label": "PAR_073", "shape": "dot", "size": 10, "title": "Par origem: PAR_073"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_005", "label": "PAR_005", "shape": "dot", "size": 10, "title": "Par origem: PAR_005"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_055", "label": "PAR_055", "shape": "dot", "size": 10, "title": "Par origem: PAR_055"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_096", "label": "PAR_096", "shape": "dot", "size": 10, "title": "Par origem: PAR_096"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_112", "label": "PAR_112", "shape": "dot", "size": 10, "title": "Par origem: PAR_112"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_097", "label": "PAR_097", "shape": "dot", "size": 10, "title": "Par origem: PAR_097"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_091", "label": "PAR_091", "shape": "dot", "size": 10, "title": "Par origem: PAR_091"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_120", "label": "PAR_120", "shape": "dot", "size": 10, "title": "Par origem: PAR_120"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_040", "label": "PAR_040", "shape": "dot", "size": 10, "title": "Par origem: PAR_040"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_039", "label": "PAR_039", "shape": "dot", "size": 10, "title": "Par origem: PAR_039"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_024", "label": "PAR_024", "shape": "dot", "size": 10, "title": "Par origem: PAR_024"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_038", "label": "PAR_038", "shape": "dot", "size": 10, "title": "Par origem: PAR_038"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_102", "label": "PAR_102", "shape": "dot", "size": 10, "title": "Par origem: PAR_102"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_085", "label": "PAR_085", "shape": "dot", "size": 10, "title": "Par origem: PAR_085"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_068", "label": "PAR_068", "shape": "dot", "size": 10, "title": "Par origem: PAR_068"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_057", "label": "PAR_057", "shape": "dot", "size": 10, "title": "Par origem: PAR_057"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_080", "label": "PAR_080", "shape": "dot", "size": 10, "title": "Par origem: PAR_080"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_110", "label": "PAR_110", "shape": "dot", "size": 10, "title": "Par origem: PAR_110"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_002", "label": "PAR_002", "shape": "dot", "size": 10, "title": "Par origem: PAR_002"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_016", "label": "PAR_016", "shape": "dot", "size": 10, "title": "Par origem: PAR_016"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_033", "label": "PAR_033", "shape": "dot", "size": 10, "title": "Par origem: PAR_033"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_028", "label": "PAR_028", "shape": "dot", "size": 10, "title": "Par origem: PAR_028"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_076", "label": "PAR_076", "shape": "dot", "size": 10, "title": "Par origem: PAR_076"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_032", "label": "PAR_032", "shape": "dot", "size": 10, "title": "Par origem: PAR_032"}, {"color": "#97c2fc", "font": {"color": "#222222"}, "id": "PAR_093", "label": "PAR_093", "shape": "dot", "size": 10, "title": "Par origem: PAR_093"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "PAR_014", "label": "91%", "title": "PAR_014 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 91.27%", "to": "PAR_029", "value": 0.9127, "width": 1}, {"arrows": "to", "from": "PAR_014", "label": "90%", "title": "PAR_014 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 90.23%", "to": "PAR_090", "value": 0.9023, "width": 1}, {"arrows": "to", "from": "PAR_014", "label": "89%", "title": "PAR_014 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 88.55%", "to": "PAR_012", "value": 0.8855, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "91%", "title": "PAR_067 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 91.23%", "to": "PAR_029", "value": 0.9123, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "91%", "title": "PAR_067 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 90.73%", "to": "PAR_051", "value": 0.9073, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "90%", "title": "PAR_067 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 90.32%", "to": "PAR_090", "value": 0.9032, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "90%", "title": "PAR_067 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 89.99%", "to": "PAR_012", "value": 0.8999, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "89%", "title": "PAR_067 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 88.96%", "to": "PAR_027", "value": 0.8896, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "87%", "title": "PAR_067 \u2192 PAR_034\u003cbr\u003eProbabilidade IA: 86.63%", "to": "PAR_034", "value": 0.8663, "width": 1}, {"arrows": "to", "from": "PAR_067", "label": "86%", "title": "PAR_067 \u2192 PAR_065\u003cbr\u003eProbabilidade IA: 86.37%", "to": "PAR_065", "value": 0.8637, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "91%", "title": "PAR_117 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 91.11%", "to": "PAR_090", "value": 0.9111, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "91%", "title": "PAR_117 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 90.63%", "to": "PAR_051", "value": 0.9063, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "90%", "title": "PAR_117 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 89.70%", "to": "PAR_012", "value": 0.897, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "89%", "title": "PAR_117 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 89.08%", "to": "PAR_027", "value": 0.8908, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "89%", "title": "PAR_117 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 88.82%", "to": "PAR_003", "value": 0.8882, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "87%", "title": "PAR_117 \u2192 PAR_034\u003cbr\u003eProbabilidade IA: 87.23%", "to": "PAR_034", "value": 0.8723, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "87%", "title": "PAR_117 \u2192 PAR_061\u003cbr\u003eProbabilidade IA: 86.84%", "to": "PAR_061", "value": 0.8684, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "87%", "title": "PAR_117 \u2192 PAR_069\u003cbr\u003eProbabilidade IA: 86.70%", "to": "PAR_069", "value": 0.867, "width": 1}, {"arrows": "to", "from": "PAR_117", "label": "86%", "title": "PAR_117 \u2192 PAR_092\u003cbr\u003eProbabilidade IA: 86.41%", "to": "PAR_092", "value": 0.8641, "width": 1}, {"arrows": "to", "from": "PAR_090", "label": "90%", "title": "PAR_090 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.37%", "to": "PAR_029", "value": 0.9037, "width": 1}, {"arrows": "to", "from": "PAR_090", "label": "88%", "title": "PAR_090 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 88.25%", "to": "PAR_003", "value": 0.8825, "width": 1}, {"arrows": "to", "from": "PAR_090", "label": "87%", "title": "PAR_090 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 86.54%", "to": "PAR_012", "value": 0.8654, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "91%", "title": "PAR_073 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 90.87%", "to": "PAR_090", "value": 0.9087, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "90%", "title": "PAR_073 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 90.50%", "to": "PAR_051", "value": 0.905, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "90%", "title": "PAR_073 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.47%", "to": "PAR_029", "value": 0.9047, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "89%", "title": "PAR_073 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 88.63%", "to": "PAR_012", "value": 0.8863, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "88%", "title": "PAR_073 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 88.32%", "to": "PAR_003", "value": 0.8832, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "88%", "title": "PAR_073 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 87.93%", "to": "PAR_027", "value": 0.8793, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "86%", "title": "PAR_073 \u2192 PAR_061\u003cbr\u003eProbabilidade IA: 86.46%", "to": "PAR_061", "value": 0.8646, "width": 1}, {"arrows": "to", "from": "PAR_073", "label": "86%", "title": "PAR_073 \u2192 PAR_034\u003cbr\u003eProbabilidade IA: 86.36%", "to": "PAR_034", "value": 0.8636, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "91%", "title": "PAR_005 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.86%", "to": "PAR_029", "value": 0.9086, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "90%", "title": "PAR_005 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 89.95%", "to": "PAR_090", "value": 0.8995, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "89%", "title": "PAR_005 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 89.12%", "to": "PAR_051", "value": 0.8912, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "88%", "title": "PAR_005 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 87.82%", "to": "PAR_012", "value": 0.8782, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "88%", "title": "PAR_005 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 87.79%", "to": "PAR_027", "value": 0.8779, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "87%", "title": "PAR_005 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 87.13%", "to": "PAR_003", "value": 0.8713, "width": 1}, {"arrows": "to", "from": "PAR_005", "label": "87%", "title": "PAR_005 \u2192 PAR_065\u003cbr\u003eProbabilidade IA: 86.84%", "to": "PAR_065", "value": 0.8684, "width": 1}, {"arrows": "to", "from": "PAR_055", "label": "91%", "title": "PAR_055 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 90.68%", "to": "PAR_090", "value": 0.9068, "width": 1}, {"arrows": "to", "from": "PAR_055", "label": "90%", "title": "PAR_055 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.47%", "to": "PAR_029", "value": 0.9047, "width": 1}, {"arrows": "to", "from": "PAR_055", "label": "90%", "title": "PAR_055 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 90.07%", "to": "PAR_051", "value": 0.9007, "width": 1}, {"arrows": "to", "from": "PAR_055", "label": "88%", "title": "PAR_055 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 87.71%", "to": "PAR_003", "value": 0.8771, "width": 1}, {"arrows": "to", "from": "PAR_096", "label": "91%", "title": "PAR_096 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.62%", "to": "PAR_029", "value": 0.9062, "width": 1}, {"arrows": "to", "from": "PAR_096", "label": "90%", "title": "PAR_096 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 90.18%", "to": "PAR_090", "value": 0.9018, "width": 1}, {"arrows": "to", "from": "PAR_096", "label": "90%", "title": "PAR_096 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 89.91%", "to": "PAR_051", "value": 0.8991, "width": 1}, {"arrows": "to", "from": "PAR_096", "label": "89%", "title": "PAR_096 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 88.58%", "to": "PAR_003", "value": 0.8858, "width": 1}, {"arrows": "to", "from": "PAR_112", "label": "91%", "title": "PAR_112 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.59%", "to": "PAR_029", "value": 0.9059, "width": 1}, {"arrows": "to", "from": "PAR_112", "label": "90%", "title": "PAR_112 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 90.45%", "to": "PAR_051", "value": 0.9045, "width": 1}, {"arrows": "to", "from": "PAR_112", "label": "88%", "title": "PAR_112 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 88.21%", "to": "PAR_003", "value": 0.8821, "width": 1}, {"arrows": "to", "from": "PAR_112", "label": "86%", "title": "PAR_112 \u2192 PAR_061\u003cbr\u003eProbabilidade IA: 86.46%", "to": "PAR_061", "value": 0.8646, "width": 1}, {"arrows": "to", "from": "PAR_097", "label": "90%", "title": "PAR_097 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.21%", "to": "PAR_029", "value": 0.9021, "width": 1}, {"arrows": "to", "from": "PAR_097", "label": "90%", "title": "PAR_097 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 89.58%", "to": "PAR_012", "value": 0.8958, "width": 1}, {"arrows": "to", "from": "PAR_097", "label": "89%", "title": "PAR_097 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 88.76%", "to": "PAR_090", "value": 0.8876, "width": 1}, {"arrows": "to", "from": "PAR_091", "label": "90%", "title": "PAR_091 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 90.19%", "to": "PAR_029", "value": 0.9019, "width": 1}, {"arrows": "to", "from": "PAR_091", "label": "88%", "title": "PAR_091 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 88.30%", "to": "PAR_051", "value": 0.883, "width": 1}, {"arrows": "to", "from": "PAR_091", "label": "87%", "title": "PAR_091 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 86.53%", "to": "PAR_012", "value": 0.8653, "width": 1}, {"arrows": "to", "from": "PAR_120", "label": "90%", "title": "PAR_120 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 90.10%", "to": "PAR_090", "value": 0.901, "width": 1}, {"arrows": "to", "from": "PAR_120", "label": "87%", "title": "PAR_120 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 86.75%", "to": "PAR_003", "value": 0.8675, "width": 1}, {"arrows": "to", "from": "PAR_012", "label": "87%", "title": "PAR_012 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 87.29%", "to": "PAR_090", "value": 0.8729, "width": 1}, {"arrows": "to", "from": "PAR_012", "label": "87%", "title": "PAR_012 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 86.54%", "to": "PAR_029", "value": 0.8654, "width": 1}, {"arrows": "to", "from": "PAR_069", "label": "90%", "title": "PAR_069 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.94%", "to": "PAR_029", "value": 0.8994, "width": 1}, {"arrows": "to", "from": "PAR_069", "label": "90%", "title": "PAR_069 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 89.69%", "to": "PAR_090", "value": 0.8969, "width": 1}, {"arrows": "to", "from": "PAR_069", "label": "89%", "title": "PAR_069 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 88.89%", "to": "PAR_003", "value": 0.8889, "width": 1}, {"arrows": "to", "from": "PAR_069", "label": "88%", "title": "PAR_069 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 88.15%", "to": "PAR_012", "value": 0.8815, "width": 1}, {"arrows": "to", "from": "PAR_040", "label": "90%", "title": "PAR_040 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 89.91%", "to": "PAR_012", "value": 0.8991, "width": 1}, {"arrows": "to", "from": "PAR_040", "label": "89%", "title": "PAR_040 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 88.76%", "to": "PAR_090", "value": 0.8876, "width": 1}, {"arrows": "to", "from": "PAR_040", "label": "89%", "title": "PAR_040 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 88.64%", "to": "PAR_029", "value": 0.8864, "width": 1}, {"arrows": "to", "from": "PAR_040", "label": "88%", "title": "PAR_040 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 87.84%", "to": "PAR_051", "value": 0.8784, "width": 1}, {"arrows": "to", "from": "PAR_039", "label": "90%", "title": "PAR_039 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.91%", "to": "PAR_029", "value": 0.8991, "width": 1}, {"arrows": "to", "from": "PAR_039", "label": "90%", "title": "PAR_039 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 89.59%", "to": "PAR_090", "value": 0.8959, "width": 1}, {"arrows": "to", "from": "PAR_039", "label": "89%", "title": "PAR_039 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 89.37%", "to": "PAR_051", "value": 0.8937, "width": 1}, {"arrows": "to", "from": "PAR_039", "label": "87%", "title": "PAR_039 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 87.30%", "to": "PAR_003", "value": 0.873, "width": 1}, {"arrows": "to", "from": "PAR_024", "label": "90%", "title": "PAR_024 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 89.74%", "to": "PAR_090", "value": 0.8974, "width": 1}, {"arrows": "to", "from": "PAR_024", "label": "90%", "title": "PAR_024 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.57%", "to": "PAR_029", "value": 0.8957, "width": 1}, {"arrows": "to", "from": "PAR_024", "label": "89%", "title": "PAR_024 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 88.65%", "to": "PAR_051", "value": 0.8865, "width": 1}, {"arrows": "to", "from": "PAR_024", "label": "87%", "title": "PAR_024 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 86.55%", "to": "PAR_003", "value": 0.8655, "width": 1}, {"arrows": "to", "from": "PAR_024", "label": "86%", "title": "PAR_024 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 86.48%", "to": "PAR_027", "value": 0.8648, "width": 1}, {"arrows": "to", "from": "PAR_038", "label": "90%", "title": "PAR_038 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.72%", "to": "PAR_029", "value": 0.8972, "width": 1}, {"arrows": "to", "from": "PAR_038", "label": "89%", "title": "PAR_038 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 89.29%", "to": "PAR_051", "value": 0.8929, "width": 1}, {"arrows": "to", "from": "PAR_038", "label": "89%", "title": "PAR_038 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 89.22%", "to": "PAR_012", "value": 0.8922, "width": 1}, {"arrows": "to", "from": "PAR_038", "label": "89%", "title": "PAR_038 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 88.91%", "to": "PAR_090", "value": 0.8891, "width": 1}, {"arrows": "to", "from": "PAR_038", "label": "88%", "title": "PAR_038 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 87.56%", "to": "PAR_027", "value": 0.8756, "width": 1}, {"arrows": "to", "from": "PAR_038", "label": "87%", "title": "PAR_038 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 87.49%", "to": "PAR_003", "value": 0.8749, "width": 1}, {"arrows": "to", "from": "PAR_102", "label": "89%", "title": "PAR_102 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.36%", "to": "PAR_029", "value": 0.8936, "width": 1}, {"arrows": "to", "from": "PAR_102", "label": "89%", "title": "PAR_102 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 88.63%", "to": "PAR_090", "value": 0.8863, "width": 1}, {"arrows": "to", "from": "PAR_102", "label": "88%", "title": "PAR_102 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 87.79%", "to": "PAR_012", "value": 0.8779, "width": 1}, {"arrows": "to", "from": "PAR_102", "label": "86%", "title": "PAR_102 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 86.38%", "to": "PAR_027", "value": 0.8638, "width": 1}, {"arrows": "to", "from": "PAR_085", "label": "89%", "title": "PAR_085 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 89.24%", "to": "PAR_090", "value": 0.8924, "width": 1}, {"arrows": "to", "from": "PAR_085", "label": "89%", "title": "PAR_085 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.08%", "to": "PAR_029", "value": 0.8908, "width": 1}, {"arrows": "to", "from": "PAR_085", "label": "89%", "title": "PAR_085 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 88.55%", "to": "PAR_051", "value": 0.8855, "width": 1}, {"arrows": "to", "from": "PAR_085", "label": "87%", "title": "PAR_085 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 86.80%", "to": "PAR_012", "value": 0.868, "width": 1}, {"arrows": "to", "from": "PAR_085", "label": "87%", "title": "PAR_085 \u2192 PAR_027\u003cbr\u003eProbabilidade IA: 86.68%", "to": "PAR_027", "value": 0.8668, "width": 1}, {"arrows": "to", "from": "PAR_085", "label": "86%", "title": "PAR_085 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 86.48%", "to": "PAR_003", "value": 0.8648, "width": 1}, {"arrows": "to", "from": "PAR_068", "label": "89%", "title": "PAR_068 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 89.23%", "to": "PAR_029", "value": 0.8923, "width": 1}, {"arrows": "to", "from": "PAR_068", "label": "89%", "title": "PAR_068 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 88.56%", "to": "PAR_090", "value": 0.8856, "width": 1}, {"arrows": "to", "from": "PAR_068", "label": "87%", "title": "PAR_068 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 86.76%", "to": "PAR_051", "value": 0.8676, "width": 1}, {"arrows": "to", "from": "PAR_003", "label": "88%", "title": "PAR_003 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 87.51%", "to": "PAR_090", "value": 0.8751, "width": 1}, {"arrows": "to", "from": "PAR_003", "label": "87%", "title": "PAR_003 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 86.74%", "to": "PAR_051", "value": 0.8674, "width": 1}, {"arrows": "to", "from": "PAR_003", "label": "87%", "title": "PAR_003 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 86.66%", "to": "PAR_012", "value": 0.8666, "width": 1}, {"arrows": "to", "from": "PAR_057", "label": "89%", "title": "PAR_057 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 88.88%", "to": "PAR_029", "value": 0.8888, "width": 1}, {"arrows": "to", "from": "PAR_057", "label": "89%", "title": "PAR_057 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 88.77%", "to": "PAR_090", "value": 0.8877, "width": 1}, {"arrows": "to", "from": "PAR_057", "label": "89%", "title": "PAR_057 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 88.71%", "to": "PAR_012", "value": 0.8871, "width": 1}, {"arrows": "to", "from": "PAR_080", "label": "89%", "title": "PAR_080 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 88.83%", "to": "PAR_029", "value": 0.8883, "width": 1}, {"arrows": "to", "from": "PAR_080", "label": "87%", "title": "PAR_080 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 87.19%", "to": "PAR_051", "value": 0.8719, "width": 1}, {"arrows": "to", "from": "PAR_110", "label": "89%", "title": "PAR_110 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 88.61%", "to": "PAR_029", "value": 0.8861, "width": 1}, {"arrows": "to", "from": "PAR_110", "label": "88%", "title": "PAR_110 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 88.38%", "to": "PAR_051", "value": 0.8838, "width": 1}, {"arrows": "to", "from": "PAR_110", "label": "87%", "title": "PAR_110 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 86.60%", "to": "PAR_090", "value": 0.866, "width": 1}, {"arrows": "to", "from": "PAR_002", "label": "88%", "title": "PAR_002 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 87.70%", "to": "PAR_029", "value": 0.877, "width": 1}, {"arrows": "to", "from": "PAR_002", "label": "87%", "title": "PAR_002 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 87.17%", "to": "PAR_012", "value": 0.8717, "width": 1}, {"arrows": "to", "from": "PAR_002", "label": "87%", "title": "PAR_002 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 87.06%", "to": "PAR_090", "value": 0.8706, "width": 1}, {"arrows": "to", "from": "PAR_016", "label": "88%", "title": "PAR_016 \u2192 PAR_051\u003cbr\u003eProbabilidade IA: 87.66%", "to": "PAR_051", "value": 0.8766, "width": 1}, {"arrows": "to", "from": "PAR_016", "label": "87%", "title": "PAR_016 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 87.34%", "to": "PAR_090", "value": 0.8734, "width": 1}, {"arrows": "to", "from": "PAR_092", "label": "88%", "title": "PAR_092 \u2192 PAR_003\u003cbr\u003eProbabilidade IA: 87.65%", "to": "PAR_003", "value": 0.8765, "width": 1}, {"arrows": "to", "from": "PAR_033", "label": "87%", "title": "PAR_033 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 87.48%", "to": "PAR_090", "value": 0.8748, "width": 1}, {"arrows": "to", "from": "PAR_033", "label": "87%", "title": "PAR_033 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 87.40%", "to": "PAR_029", "value": 0.874, "width": 1}, {"arrows": "to", "from": "PAR_028", "label": "87%", "title": "PAR_028 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 86.98%", "to": "PAR_012", "value": 0.8698, "width": 1}, {"arrows": "to", "from": "PAR_028", "label": "87%", "title": "PAR_028 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 86.70%", "to": "PAR_029", "value": 0.867, "width": 1}, {"arrows": "to", "from": "PAR_076", "label": "87%", "title": "PAR_076 \u2192 PAR_029\u003cbr\u003eProbabilidade IA: 86.92%", "to": "PAR_029", "value": 0.8692, "width": 1}, {"arrows": "to", "from": "PAR_032", "label": "87%", "title": "PAR_032 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 86.65%", "to": "PAR_090", "value": 0.8665, "width": 1}, {"arrows": "to", "from": "PAR_032", "label": "86%", "title": "PAR_032 \u2192 PAR_012\u003cbr\u003eProbabilidade IA: 86.33%", "to": "PAR_012", "value": 0.8633, "width": 1}, {"arrows": "to", "from": "PAR_093", "label": "86%", "title": "PAR_093 \u2192 PAR_090\u003cbr\u003eProbabilidade IA: 86.44%", "to": "PAR_090", "value": 0.8644, "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 180,
+            "springConstant": 0.05,
+            "springLength": 160
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

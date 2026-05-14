@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "PARV2_001", "label": "PARV2_001", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_074", "label": "PARV2_074", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_111", "label": "PARV2_111", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_171", "label": "PARV2_171", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_004", "label": "PARV2_004", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_006", "label": "PARV2_006", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_013", "label": "PARV2_013", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_021", "label": "PARV2_021", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_035", "label": "PARV2_035", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_039", "label": "PARV2_039", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_040", "label": "PARV2_040", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_049", "label": "PARV2_049", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_065", "label": "PARV2_065", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_069", "label": "PARV2_069", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_070", "label": "PARV2_070", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_079", "label": "PARV2_079", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_084", "label": "PARV2_084", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_087", "label": "PARV2_087", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_090", "label": "PARV2_090", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_105", "label": "PARV2_105", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_107", "label": "PARV2_107", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_108", "label": "PARV2_108", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_109", "label": "PARV2_109", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_113", "label": "PARV2_113", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_116", "label": "PARV2_116", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_122", "label": "PARV2_122", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_129", "label": "PARV2_129", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_133", "label": "PARV2_133", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_134", "label": "PARV2_134", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_136", "label": "PARV2_136", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_138", "label": "PARV2_138", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_139", "label": "PARV2_139", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_142", "label": "PARV2_142", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_159", "label": "PARV2_159", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_162", "label": "PARV2_162", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_164", "label": "PARV2_164", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_166", "label": "PARV2_166", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_177", "label": "PARV2_177", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_181", "label": "PARV2_181", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_182", "label": "PARV2_182", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_184", "label": "PARV2_184", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_187", "label": "PARV2_187", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_192", "label": "PARV2_192", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_193", "label": "PARV2_193", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_194", "label": "PARV2_194", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_198", "label": "PARV2_198", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_200", "label": "PARV2_200", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_203", "label": "PARV2_203", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_207", "label": "PARV2_207", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_208", "label": "PARV2_208", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_209", "label": "PARV2_209", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_212", "label": "PARV2_212", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_219", "label": "PARV2_219", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_221", "label": "PARV2_221", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_225", "label": "PARV2_225", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_232", "label": "PARV2_232", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_235", "label": "PARV2_235", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_237", "label": "PARV2_237", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_244", "label": "PARV2_244", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_246", "label": "PARV2_246", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_014", "label": "PARV2_014", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_174", "label": "PARV2_174", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_238", "label": "PARV2_238", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_239", "label": "PARV2_239", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_051", "label": "PARV2_051", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_054", "label": "PARV2_054", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_110", "label": "PARV2_110", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_127", "label": "PARV2_127", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_146", "label": "PARV2_146", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_163", "label": "PARV2_163", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_204", "label": "PARV2_204", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_218", "label": "PARV2_218", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_098", "label": "PARV2_098", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_017", "label": "PARV2_017", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_022", "label": "PARV2_022", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_028", "label": "PARV2_028", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_179", "label": "PARV2_179", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_202", "label": "PARV2_202", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_032", "label": "PARV2_032", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_041", "label": "PARV2_041", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_060", "label": "PARV2_060", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_072", "label": "PARV2_072", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_077", "label": "PARV2_077", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_125", "label": "PARV2_125", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_141", "label": "PARV2_141", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_148", "label": "PARV2_148", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_172", "label": "PARV2_172", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_188", "label": "PARV2_188", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_210", "label": "PARV2_210", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PARV2_216", "label": "PARV2_216", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "PARV2_001", "to": "PARV2_074", "width": 0.668}, {"arrows": "to", "from": "PARV2_001", "to": "PARV2_111", "width": 0.647}, {"arrows": "to", "from": "PARV2_001", "to": "PARV2_171", "width": 0.657}, {"arrows": "to", "from": "PARV2_004", "to": "PARV2_074", "width": 0.606}, {"arrows": "to", "from": "PARV2_004", "to": "PARV2_171", "width": 0.668}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_001", "width": 0.649}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_013", "width": 0.723}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_021", "width": 0.626}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_035", "width": 0.655}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_039", "width": 0.611}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_040", "width": 0.628}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_049", "width": 0.702}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_065", "width": 0.652}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_069", "width": 0.666}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_070", "width": 0.662}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_074", "width": 0.668}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_079", "width": 0.653}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_084", "width": 0.676}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_087", "width": 0.668}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_090", "width": 0.681}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_105", "width": 0.657}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_107", "width": 0.669}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_108", "width": 0.682}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_109", "width": 0.669}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_113", "width": 0.723}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_116", "width": 0.636}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_122", "width": 0.618}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_129", "width": 0.678}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_133", "width": 0.703}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_134", "width": 0.634}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_136", "width": 0.697}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_138", "width": 0.628}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_139", "width": 0.636}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_142", "width": 0.667}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_159", "width": 0.674}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_162", "width": 0.716}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_164", "width": 0.602}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_166", "width": 0.756}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_171", "width": 0.62}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_177", "width": 0.634}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_181", "width": 0.661}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_182", "width": 0.684}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_184", "width": 0.668}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_187", "width": 0.667}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_192", "width": 0.674}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_193", "width": 0.642}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_194", "width": 0.686}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_198", "width": 0.665}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_200", "width": 0.669}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_203", "width": 0.628}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_207", "width": 0.649}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_208", "width": 0.651}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_209", "width": 0.67}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_212", "width": 0.603}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_219", "width": 0.68}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_221", "width": 0.628}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_225", "width": 0.637}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_232", "width": 0.688}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_235", "width": 0.663}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_237", "width": 0.632}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_244", "width": 0.654}, {"arrows": "to", "from": "PARV2_006", "to": "PARV2_246", "width": 0.632}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_014", "width": 0.624}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_049", "width": 0.712}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_069", "width": 0.639}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_074", "width": 0.641}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_079", "width": 0.626}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_142", "width": 0.676}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_159", "width": 0.684}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_171", "width": 0.667}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_174", "width": 0.621}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_182", "width": 0.657}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_193", "width": 0.615}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_198", "width": 0.638}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_203", "width": 0.601}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_238", "width": 0.635}, {"arrows": "to", "from": "PARV2_013", "to": "PARV2_239", "width": 0.65}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_014", "width": 0.611}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_049", "width": 0.774}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_051", "width": 0.634}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_054", "width": 0.65}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_069", "width": 0.662}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_074", "width": 0.627}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_079", "width": 0.686}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_110", "width": 0.72}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_127", "width": 0.697}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_134", "width": 0.628}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_142", "width": 0.746}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_146", "width": 0.674}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_159", "width": 0.697}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_163", "width": 0.657}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_166", "width": 0.742}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_182", "width": 0.68}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_193", "width": 0.723}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_200", "width": 0.655}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_204", "width": 0.72}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_218", "width": 0.64}, {"arrows": "to", "from": "PARV2_021", "to": "PARV2_238", "width": 0.745}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_006", "width": 0.715}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_013", "width": 0.785}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_074", "width": 0.739}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_084", "width": 0.738}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_098", "width": 0.683}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_108", "width": 0.683}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_129", "width": 0.704}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_138", "width": 0.63}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_171", "width": 0.654}, {"arrows": "to", "from": "PARV2_014", "to": "PARV2_239", "width": 0.641}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_006", "width": 0.667}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_013", "width": 0.81}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_074", "width": 0.723}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_084", "width": 0.762}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_098", "width": 0.671}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_129", "width": 0.728}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_138", "width": 0.614}, {"arrows": "to", "from": "PARV2_017", "to": "PARV2_239", "width": 0.625}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_006", "width": 0.676}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_013", "width": 0.746}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_065", "width": 0.722}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_074", "width": 0.636}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_084", "width": 0.735}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_108", "width": 0.794}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_129", "width": 0.774}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_138", "width": 0.664}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_171", "width": 0.69}, {"arrows": "to", "from": "PARV2_022", "to": "PARV2_239", "width": 0.663}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_049", "width": 0.67}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_069", "width": 0.667}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_079", "width": 0.618}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_110", "width": 0.698}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_127", "width": 0.659}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_134", "width": 0.654}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_142", "width": 0.636}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_159", "width": 0.675}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_166", "width": 0.757}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_171", "width": 0.661}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_179", "width": 0.646}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_182", "width": 0.722}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_193", "width": 0.643}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_198", "width": 0.665}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_200", "width": 0.669}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_202", "width": 0.648}, {"arrows": "to", "from": "PARV2_028", "to": "PARV2_204", "width": 0.64}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_001", "width": 0.675}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_004", "width": 0.62}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_006", "width": 0.717}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_014", "width": 0.641}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_022", "width": 0.615}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_028", "width": 0.615}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_040", "width": 0.655}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_041", "width": 0.733}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_049", "width": 0.692}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_051", "width": 0.601}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_060", "width": 0.63}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_065", "width": 0.716}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_072", "width": 0.627}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_077", "width": 0.643}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_079", "width": 0.716}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_084", "width": 0.776}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_087", "width": 0.695}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_090", "width": 0.744}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_105", "width": 0.72}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_107", "width": 0.659}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_108", "width": 0.709}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_109", "width": 0.769}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_110", "width": 0.688}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_111", "width": 0.601}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_113", "width": 0.713}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_116", "width": 0.663}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_125", "width": 0.62}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_127", "width": 0.605}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_129", "width": 0.669}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_133", "width": 0.657}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_136", "width": 0.651}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_141", "width": 0.675}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_142", "width": 0.62}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_146", "width": 0.62}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_148", "width": 0.634}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_159", "width": 0.701}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_162", "width": 0.743}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_166", "width": 0.746}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_171", "width": 0.647}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_172", "width": 0.625}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_174", "width": 0.638}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_177", "width": 0.734}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_179", "width": 0.653}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_181", "width": 0.687}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_187", "width": 0.731}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_188", "width": 0.716}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_192", "width": 0.664}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_194", "width": 0.64}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_198", "width": 0.692}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_203", "width": 0.618}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_204", "width": 0.63}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_207", "width": 0.676}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_208", "width": 0.715}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_209", "width": 0.66}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_210", "width": 0.606}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_216", "width": 0.655}, {"arrows": "to", "from": "PARV2_032", "to": "PARV2_219", "width": 0.743}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

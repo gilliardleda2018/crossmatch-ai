@@ -1,0 +1,50 @@
+RELATÓRIO DO MODELO DE IA - CROSSMATCH IA
+============================================================
+
+Objetivo:
+Prever a viabilidade de um match cruzado entre doador e receptor.
+
+Métricas do modelo:
+Acurácia:  0.8959
+Precisão:  0.8490
+Recall:    1.0000
+F1-score:  0.9183
+ROC-AUC:   0.9695
+
+Matriz de confusão:
+[[197  66]
+ [  0 371]]
+
+Relatório de classificação:
+              precision    recall  f1-score   support
+
+           0       1.00      0.75      0.86       263
+           1       0.85      1.00      0.92       371
+
+    accuracy                           0.90       634
+   macro avg       0.92      0.87      0.89       634
+weighted avg       0.91      0.90      0.89       634
+
+
+Top 20 matches com maior probabilidade segundo a IA:
+doador_origem_par_id receptor_destino_par_id  ia_probabilidade_match_viavel ia_faixa_confianca  score_predito_sucesso  match_viavel
+             PAR_014                 PAR_029                         0.9127         muito_alta                  0.672             1
+             PAR_067                 PAR_029                         0.9123         muito_alta                  0.674             1
+             PAR_117                 PAR_090                         0.9111         muito_alta                  0.705             1
+             PAR_073                 PAR_090                         0.9087         muito_alta                  0.707             1
+             PAR_005                 PAR_029                         0.9086         muito_alta                  0.672             1
+             PAR_067                 PAR_051                         0.9073         muito_alta                  0.701             1
+             PAR_055                 PAR_090                         0.9068         muito_alta                  0.707             1
+             PAR_117                 PAR_051                         0.9063         muito_alta                  0.698             1
+             PAR_096                 PAR_029                         0.9062         muito_alta                  0.674             1
+             PAR_112                 PAR_029                         0.9059         muito_alta                  0.670             1
+             PAR_073                 PAR_051                         0.9050         muito_alta                  0.700             1
+             PAR_055                 PAR_029                         0.9047         muito_alta                  0.709             1
+             PAR_073                 PAR_029                         0.9047         muito_alta                  0.672             1
+             PAR_112                 PAR_051                         0.9045         muito_alta                  0.698             1
+             PAR_090                 PAR_029                         0.9037         muito_alta                  0.675             1
+             PAR_067                 PAR_090                         0.9032         muito_alta                  0.745             1
+             PAR_014                 PAR_090                         0.9023         muito_alta                  0.707             1
+             PAR_097                 PAR_029                         0.9021         muito_alta                  0.679             1
+             PAR_091                 PAR_029                         0.9019         muito_alta                  0.680             1
+             PAR_096                 PAR_090                         0.9018         muito_alta                  0.709             1
